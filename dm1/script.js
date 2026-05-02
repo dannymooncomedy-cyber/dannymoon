@@ -59,37 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 4000);
   }
 
-  /* --- Newsletter Form --- */
-  const newsletterForm = document.getElementById('newsletter-form');
-  const newsletterMsg = document.getElementById('newsletter-msg');
-
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = newsletterForm.querySelector('input[type="email"]').value;
-      if (email) {
-        newsletterMsg.textContent = 'Thanks for signing up! Stay tuned.';
-        newsletterForm.reset();
-        setTimeout(() => {
-          newsletterMsg.textContent = '';
-        }, 4000);
-      }
-    });
-  }
-
-  /* --- Contact Form --- */
-  const contactForm = document.getElementById('contact-form');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(contactForm);
-      const name = formData.get('name');
-      alert(`Thanks ${name}! Your message has been received. Danny will get back to you soon.`);
-      contactForm.reset();
-    });
-  }
-
   /* --- Navbar Scroll Effect --- */
   const navbar = document.querySelector('.navbar');
   if (navbar) {
