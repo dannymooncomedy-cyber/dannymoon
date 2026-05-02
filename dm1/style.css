@@ -19,6 +19,8 @@
   --footer-bg: #0d0d0d;
   --input-bg: #1e1e1e;
   --transition: 0.3s ease;
+  --transition-fast: 0.15s ease;
+  --transition-slow: 0.5s ease;
 }
 
 /* --- Light Mode --- */
@@ -71,6 +73,17 @@ a:hover {
   color: var(--accent-hover);
 }
 
+/* Improvement 1: Better button hover effects */
+.btn {
+  transition: all var(--transition);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -83,9 +96,15 @@ h1, h2, h3, h4 {
   line-height: 1.2;
 }
 
-h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
-h2 { font-size: clamp(1.8rem, 4vw, 3rem); }
-h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
+h1 { font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: -0.5px; }
+h2 { font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -0.3px; }
+h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); letter-spacing: -0.2px; }
+
+/* Improvement 2: Better typography hierarchy */
+p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
 
 /* --- Container --- */
 .container {
@@ -149,6 +168,28 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
   color: var(--accent);
 }
 
+/* Improvement 3: Smooth nav link underline */
+.nav-links a {
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width var(--transition-fast);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
 /* Theme Toggle */
 .theme-toggle {
   background: none;
@@ -168,6 +209,12 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 .theme-toggle:hover {
   border-color: var(--accent);
   color: var(--accent);
+  transform: rotate(20deg);
+}
+
+/* Improvement 4: Smooth theme toggle rotation */
+.theme-toggle {
+  transition: all var(--transition);
 }
 
 /* Hamburger */
@@ -217,6 +264,10 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
   position: absolute;
   inset: 0;
   z-index: 0;
+  max-width: 700px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
 }
 
 .hero-slideshow img {
@@ -252,11 +303,26 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
   text-align: center;
   padding: 0 24px;
   max-width: 800px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Improvement 5: Hero content fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-content h1 {
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+  font-weight: 700;
+  letter-spacing: -1px;
 }
 
 [data-theme="light"] .hero-content h1 {
@@ -290,28 +356,45 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 
 /* --- Section Base --- */
 .section {
-  padding: 100px 0;
+  padding: 80px 0;
+  background-color: var(--bg-primary);
+  transition: background-color var(--transition);
 }
 
-.section-alt {
-  background: var(--bg-secondary);
+/* Improvement 6: Better section spacing */
+.section:nth-child(even) {
+  background-color: var(--bg-secondary);
 }
 
 .section-header {
+  margin-bottom: 48px;
   text-align: center;
-  margin-bottom: 60px;
 }
 
+/* Improvement 7: Enhanced section headers */
 .section-header h2 {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  position: relative;
+  display: inline-block;
 }
 
 .section-header .accent-line {
   width: 60px;
-  height: 3px;
+  height: 4px;
   background: var(--accent);
   margin: 0 auto;
   border-radius: 2px;
+  animation: expandWidth 0.6s ease-out;
+}
+
+/* Improvement 8: Animated accent line */
+@keyframes expandWidth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 60px;
+  }
 }
 
 /* --- Welcome Section --- */
@@ -350,12 +433,18 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 /* --- Upcoming Section --- */
 .upcoming-banner {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--accent);
+  padding: 24px;
   border-radius: 8px;
-  padding: 32px 40px;
-  margin-bottom: 32px;
-  text-align: center;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--accent);
+  transition: all var(--transition);
+}
+
+/* Improvement 17: Better upcoming banner hover */
+.upcoming-banner:hover {
+  background: var(--bg-secondary);
+  box-shadow: 0 4px 16px rgba(230, 57, 70, 0.1);
+  transform: translateX(4px);
 }
 
 .upcoming-banner h3 {
@@ -435,17 +524,18 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 
 .work-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  padding: 40px 24px;
   border-radius: 12px;
-  padding: 40px 32px;
   text-align: center;
-  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
 }
 
+/* Improvement 9: Enhanced card hover effects */
 .work-card:hover {
+  transform: translateY(-8px);
   border-color: var(--accent);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
+  box-shadow: 0 12px 32px rgba(230, 57, 70, 0.15);
 }
 
 .work-card .icon {
@@ -476,15 +566,25 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
   border: none;
 }
 
+/* Improvement 10: Better button styling */
 .btn-primary {
   background: var(--accent);
-  color: #fff;
+  color: white;
+  padding: 12px 32px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-block;
+  text-decoration: none;
 }
 
 .btn-primary:hover {
   background: var(--accent-hover);
-  color: #fff;
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
 }
 
 .btn-outline {
@@ -510,9 +610,13 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
   position: relative;
   overflow: hidden;
   border-radius: 12px;
-  aspect-ratio: 4/3;
-  cursor: pointer;
-  transition: transform var(--transition);
+  aspect-ratio: 1;
+  transition: all var(--transition);
+}
+
+/* Improvement 14: Better event card hover */
+.event-card:hover {
+  transform: scale(1.05);
 }
 
 .event-card img {
@@ -530,7 +634,7 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 .event-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(230, 57, 70, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(230, 57, 70, 0.8), rgba(0, 0, 0, 0.8));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -538,6 +642,7 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
   transition: opacity var(--transition);
 }
 
+/* Improvement 15: Better event overlay gradient */
 .event-card:hover .event-overlay {
   opacity: 1;
 }
@@ -552,22 +657,21 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 /* --- Merch Section --- */
 .merch-cta {
   text-align: center;
-  padding: 60px 32px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  padding: 60px 40px;
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
   border-radius: 12px;
+  border: 1px solid var(--accent);
+  transition: all var(--transition);
+}
+
+/* Improvement 16: Better merch CTA styling */
+.merch-cta:hover {
+  box-shadow: 0 12px 40px rgba(230, 57, 70, 0.2);
+  transform: translateY(-4px);
 }
 
 .merch-cta h2 {
   margin-bottom: 16px;
-}
-
-.merch-cta p {
-  color: var(--text-secondary);
-  margin-bottom: 28px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* --- Newsletter Section --- */
@@ -612,9 +716,18 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 /* --- Footer --- */
 .footer {
   background: var(--footer-bg);
-  border-top: 1px solid var(--border);
-  padding: 60px 0 32px;
-  transition: background var(--transition);
+  padding: 60px 0 0;
+  border-top: 2px solid var(--accent);
+  margin-top: 80px;
+  transition: background-color var(--transition);
+}
+
+/* Improvement 11: Better footer styling */
+.footer-col h4 {
+  margin-bottom: 16px;
+  color: var(--accent);
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
 }
 
 .footer-grid {
@@ -622,14 +735,6 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 40px;
   margin-bottom: 40px;
-}
-
-.footer-col h4 {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--accent);
-  margin-bottom: 16px;
 }
 
 .footer-col p,
@@ -654,26 +759,26 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 .social-links {
   display: flex;
   gap: 16px;
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
+/* Improvement 12: Enhanced social links */
 .social-links a {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 1px solid var(--border);
   border-radius: 50%;
-  color: var(--text-secondary);
-  font-size: 1.1rem;
+  background: var(--bg-secondary);
   transition: all var(--transition);
+  border: 1px solid var(--border);
 }
 
 .social-links a:hover {
+  background: var(--accent);
+  transform: translateY(-4px);
   border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-2px);
 }
 
 .footer-bottom {
@@ -721,9 +826,20 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 
 .contact-detail {
   display: flex;
-  align-items: flex-start;
   gap: 16px;
   margin-bottom: 24px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  transition: all var(--transition);
+}
+
+/* Improvement 13: Better contact details styling */
+.contact-detail:hover {
+  background: var(--bg-card);
+  border-left: 4px solid var(--accent);
+  padding-left: 20px;
 }
 
 .contact-detail .icon {
@@ -838,6 +954,24 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
 
 .privacy-content strong {
   color: var(--text-primary);
+}
+
+/* Improvement 18: Smooth scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-hover);
 }
 
 /* --- Responsive --- */
