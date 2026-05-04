@@ -5,6 +5,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* --- Shared Navigation --- */
+  buildNav();
+
   /* --- Theme Toggle --- */
   const themeToggle = document.getElementById('theme-toggle');
   const savedTheme = localStorage.getItem('dm-theme') || 'dark';
@@ -90,3 +93,45 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+/* --- Shared Navigation Builder --- */
+function buildNav() {
+  var placeholder = document.getElementById('main-nav');
+  if (!placeholder) return;
+
+  var page = location.pathname.split('/').pop() || 'index.html';
+  var isHome = (page === 'index.html' || page === '');
+
+  var links = [
+    { href: 'index.html',    label: 'Home' },
+    { href: isHome ? '#upcoming' : 'index.html#upcoming', label: 'Upcoming' },
+    { href: isHome ? '#work'     : 'index.html#work',     label: 'Work' },
+    { href: isHome ? '#events'   : 'index.html#events',   label: 'Events' },
+    { href: isHome ? '#merch'    : 'index.html#merch',    label: 'Merch' },
+    { href: 'pricing.html',  label: 'Services & Pricing' },
+    { href: 'contact.html',  label: 'Contact' },
+    { href: 'privacy.html',  label: 'Privacy' }
+  ];
+
+  var linkItems = links.map(function(l) {
+    var active = '';
+    if (l.href === page) active = ' class="active"';
+    if (page === '' && l.href === 'index.html') active = ' class="active"';
+    return '<li><a href="' + l.href + '"' + active + '>' + l.label + '</a></li>';
+  }).join('\n        ');
+
+  placeholder.className = 'navbar';
+  placeholder.innerHTML =
+    '<div class="container">' +
+      '<a href="index.html" class="nav-logo">DANNY <span>MOON</span></a>' +
+      '<ul class="nav-links" id="nav-links">' +
+        linkItems +
+      '</ul>' +
+      '<div style="display:flex;align-items:center;gap:12px;">' +
+        '<button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>' +
+        '<button class="hamburger" id="hamburger" aria-label="Menu">' +
+          '<span></span><span></span><span></span>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+}
