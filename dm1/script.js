@@ -104,13 +104,8 @@ function buildNav() {
 
   var links = [
     { href: 'index.html',    label: 'Home' },
-    { href: isHome ? '#upcoming' : 'index.html#upcoming', label: 'Upcoming' },
-    { href: isHome ? '#work'     : 'index.html#work',     label: 'Work' },
-    { href: isHome ? '#events'   : 'index.html#events',   label: 'Events' },
-    { href: isHome ? '#merch'    : 'index.html#merch',    label: 'Merch' },
     { href: 'pricing.html',  label: 'Services & Pricing' },
-    { href: 'contact.html',  label: 'Contact' },
-    { href: 'privacy.html',  label: 'Privacy' }
+    { href: 'contact.html',  label: 'Contact' }
   ];
 
   var linkItems = links.map(function(l) {
