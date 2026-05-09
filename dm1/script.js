@@ -92,6 +92,87 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
+  /* --- Brevo Contact Form Submission --- */
+  const brevoForms = document.querySelectorAll('.brevo-form');
+  
+  // NOTE: This placeholder assumes an environment variable substitution during deployment (e.g., CI/CD).
+  // If no build step exists, this string will need to be replaced manually or loaded from a server.
+  // Example for simple build replacement:
+  const BREVO_API_KEY = "YOUR_BREVO_API_KEY_HERE"; 
+
+  brevoForms.forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const statusDiv = form.querySelector('.form-status');
+      
+      const formData = new FormData(form);
+      const name = formData.get('name') || '';
+      const email = formData.get('email') || '';
+      const phone = formData.get('phone') || 'N/A';
+      const message = formData.get('message') || '';
+      const source = form.getAttribute('data-source') || 'Unknown Form';
+      
+      const subject = `New Lead Request - ${source}`;
+      const htmlContent = `
+        <h2>New Lead from ${source}</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}</p>
+      `;
+
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Sending...';
+      statusDiv.className = 'form-status';
+      statusDiv.style.display = 'none';
+
+      try {
+        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'api-key': BREVO_API_KEY
+          },
+          body: JSON.stringify({
+            sender: { email: "updates@system.dannymoonkid.com", name: "Danny Moon System" },
+            to: [{ email: "dannymoon.comedy@gmail.com", name: "Danny Moon" }],
+            subject: subject,
+            replyTo: { email: email, name: name },
+            htmlContent: htmlContent
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to send message.');
+        }
+
+        form.reset();
+        statusDiv.textContent = 'Message sent successfully!';
+        statusDiv.classList.add('success');
+      } catch (err) {
+        console.error(err);
+        statusDiv.textContent = 'Error sending message. Please try again.';
+        statusDiv.classList.add('error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        statusDiv.style.display = 'block';
+        
+        // Hide success message after 5 seconds
+        if(statusDiv.classList.contains('success')) {
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+                statusDiv.classList.remove('success');
+            }, 5000);
+        }
+      }
+    });
+  });
+
 });
 
 /* --- Shared Navigation Builder --- */
