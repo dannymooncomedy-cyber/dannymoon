@@ -94,11 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* --- Brevo Contact Form Submission --- */
   const brevoForms = document.querySelectorAll('.brevo-form');
-  
-  // NOTE: This placeholder assumes an environment variable substitution during deployment (e.g., CI/CD).
-  // If no build step exists, this string will need to be replaced manually or loaded from a server.
-  // Example for simple build replacement:
-  const BREVO_API_KEY = "YOUR_BREVO_API_KEY_HERE"; 
 
   brevoForms.forEach(form => {
     form.addEventListener('submit', async (e) => {
@@ -130,12 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
       statusDiv.style.display = 'none';
 
       try {
-        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+        const response = await fetch('/api/contact', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'api-key': BREVO_API_KEY
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             sender: { email: "updates@system.dannymoonkid.com", name: "Danny Moon System" },
