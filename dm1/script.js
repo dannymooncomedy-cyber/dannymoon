@@ -92,6 +92,20 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
+  const cardElements = document.querySelectorAll('.value-card, .process-card, .testimonial-card, .service-card, .feature-card, .media-card, .credit-card');
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  cardElements.forEach(el => {
+    el.classList.add('reveal-card');
+    cardObserver.observe(el);
+  });
+
   /* --- Brevo Contact Form Submission --- */
   const brevoForms = document.querySelectorAll('.brevo-form');
 
@@ -179,7 +193,8 @@ function buildNav() {
 
   var links = [
     { href: 'index.html',    label: 'Home' },
-    { href: 'pricing.html',  label: 'Services & Pricing' },
+    { href: 'index.html#work', label: 'Work' },
+    { href: 'index.html#about', label: 'About' },
     { href: 'contact.html',  label: 'Contact' }
   ];
 
