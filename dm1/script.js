@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --- Hero Slideshow --- */
-  const slides = document.querySelectorAll('.hero-slideshow img');
+  const slides = document.querySelectorAll('.hero-slide');
   if (slides.length > 0) {
     let currentSlide = 0;
     slides[0].classList.add('active');
@@ -192,17 +192,18 @@ function buildNav() {
   var isHome = (page === 'index.html' || page === '');
 
   var links = [
-    { href: 'index.html',    label: 'Home' },
-    { href: 'index.html#work', label: 'Work' },
-    { href: 'index.html#about', label: 'About' },
-    { href: 'contact.html',  label: 'Contact' }
+    { href: 'index.html', label: 'Home' },
+    { href: 'https://streamlabs.com/moonkid07/merch', label: 'Merch', external: true },
+    { href: 'contact.html', label: 'Contact' }
   ];
 
   var linkItems = links.map(function(l) {
     var active = '';
     if (l.href === page) active = ' class="active"';
     if (page === '' && l.href === 'index.html') active = ' class="active"';
-    return '<li><a href="' + l.href + '"' + active + '>' + l.label + '</a></li>';
+    var target = '';
+    if (l.external) target = ' target="_blank" rel="noopener"';
+    return '<li><a href="' + l.href + '"' + active + target + '>' + l.label + '</a></li>';
   }).join('\n        ');
 
   placeholder.className = 'navbar';
