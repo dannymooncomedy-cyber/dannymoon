@@ -397,6 +397,46 @@ p {
   }
 }
 
+/* --- Voice Reel Section --- */
+.reel-section {
+  padding-top: 24px;
+}
+
+.reel-card {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  align-items: center;
+}
+
+.reel-copy h2 {
+  margin-bottom: 16px;
+}
+
+.reel-copy p {
+  margin-bottom: 12px;
+}
+
+.reel-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.reel-video iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 12px;
+  background: #000;
+}
+
 /* --- Welcome Section --- */
 .welcome {
   text-align: center;
@@ -1409,6 +1449,10 @@ p {
     flex-direction: column;
     text-align: center;
     gap: 8px;
+  }
+
+  .reel-card {
+    grid-template-columns: 1fr;
   }
 
   .show-info {
