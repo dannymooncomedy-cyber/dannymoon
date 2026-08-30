@@ -219,7 +219,7 @@ function buildNav() {
   placeholder.className = 'navbar';
   placeholder.innerHTML =
     '<div class="container">' +
-      '<a href="index.html" class="nav-logo">DANNY <span>MOON</span></a>' +
+      '<a href="index.html" class="nav-logo">DM</a>' +
       '<ul class="nav-links" id="nav-links">' +
         linkItems +
       '</ul>' +

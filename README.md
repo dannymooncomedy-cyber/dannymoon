@@ -18,3 +18,13 @@ Assets and important files:
 - `dm1/media/audio/DannyMoon_VoiceReel.wav` — primary voice reel used on the homepage
 
 If you want a license added, tell me which one (MIT recommended for public repos).
+
+Local helper scripts
+
+I added `scripts/preview_and_commit.ps1` to help preview the site and commit/push locally on Windows. Run from the repo root in PowerShell:
+
+```powershell
+.\scripts\preview_and_commit.ps1
+```
+
+Notes: The script checks for `python` (to start a quick local server) and `git` (to stage/commit/push). If those tools are missing it will print guidance.
