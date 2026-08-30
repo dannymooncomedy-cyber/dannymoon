@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
           },
           body: JSON.stringify({
             sender: { email: "updates@system.dannymoonkid.com", name: "Danny Moon System" },
-            to: [{ email: "dannymoon.comedy@gmail.com", name: "Danny Moon" }],
+            to: [{ email: "mktv.booking@gmail.com", name: "Booking - Danny Moon" }],
             subject: subject,
             replyTo: { email: email, name: name },
             htmlContent: htmlContent
@@ -178,6 +178,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 5000);
         }
       }
+    });
+
+    /* --- Audio play management: ensure only one audio plays at a time --- */
+    const allAudio = document.querySelectorAll('audio');
+    allAudio.forEach(a => {
+      a.addEventListener('play', () => {
+        allAudio.forEach(other => {
+          if (other !== a) other.pause();
+        });
+      });
     });
   });
 

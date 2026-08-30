@@ -11,6 +11,12 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Ensure a default recipient if the client did not include one
+    const payload = Object.assign({}, req.body);
+    if (!payload.to || !Array.isArray(payload.to) || payload.to.length === 0) {
+      payload.to = [{ email: 'mktv.booking@gmail.com', name: 'Booking - Danny Moon' }];
+    }
+
     const response = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -18,7 +24,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'api-key': apiKey
       },
-      body: JSON.stringify(req.body)
+      body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
